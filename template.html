@@ -15,8 +15,7 @@
      }
 
     function onMessage(message){
-	  
-	 websocket.onMessage = function(e) {
+	  	websocket.onMessage = function(e) {
 			alert(e.data);
 			}
 			
@@ -32,7 +31,7 @@
     }
 
     function sendButton() {
-        websocket.send(document.getElementById('button').value);
+        websocket.send("buttonHasClick")
     }
 
      window.onload = init;
@@ -53,7 +52,6 @@
 	<h1>This text shouldn't change</h1>
 	<h4 id="newvariable">This is my new variable</h4>
 	</div>
-    <input type="button" id="button" onclick="sendButton();" value="Button" />
-    &nbsp;<h3 id="buttonClick">Server not running</h3>
+    <input type="button" id="buttonOne" onclick="sendButton();" value="Click Me!" />&nbsp;<strong id="buttonClick"> Server not running</strong>
     </body>
 </html>

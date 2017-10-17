@@ -44,9 +44,9 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         return True
 
     def on_message(self, message): 
-        if message == "Button":
+        if message == "buttonHasClick":   #from template.html value="Button"
             print('Button Clicked!')
-            self.buttonClickMessage = "The button was clicked"
+            self.buttonClickMessage = "The Button Was Clicked!"
             time.sleep(2)
             self.buttonClickMessage = ""
         else: 
