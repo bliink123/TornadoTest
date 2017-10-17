@@ -5,7 +5,7 @@
 	 websocket = new WebSocket("ws://localhost:8888/websocket");
 	 websocket.onopen = onOpen;
 	 websocket.onmessage = onMessage;
-	 websocket.send = sendMsg;
+	 //websocket.send = sendMsg;
      }
 
      function onOpen()
@@ -24,12 +24,15 @@
      	document.getElementById("number").textContent = parsedMessage.number;
 		document.getElementById("date").textContent = parsedMessage.date;
 		document.getElementById("newvariable").textContent = parsedMessage.newvariable;
+		document.getElementById("buttonClick").textContent = parsedMessage.buttonClick;
 	}
-		
-	 
 	 
 	function sendMsg() {
         websocket.send(document.getElementById('msg').value);
+    }
+
+    function sendButton() {
+        websocket.send(document.getElementById('button').value);
     }
 
      window.onload = init;
@@ -41,7 +44,7 @@
     </head>
 	<title> Websocket Test </title>
     <body>
-	 <strong>Message to Send:</strong>&nbsp;<input type="text" id="msg" maxlength="25" />
+	<strong>Message to Send:</strong>&nbsp;<input type="text" id="msg" maxlength="25" />
     &nbsp;<input type="button" onclick="sendMsg();" value="Send" />
 	<div>
 	<h1>The Text below should change:</h1> 
@@ -50,5 +53,7 @@
 	<h1>This text shouldn't change</h1>
 	<h4 id="newvariable">This is my new variable</h4>
 	</div>
+    <input type="button" id="button" onclick="sendButton();" value="Button" />
+    &nbsp;<h3 id="buttonClick">Server not running</h3>
     </body>
 </html>

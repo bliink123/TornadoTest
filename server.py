@@ -18,16 +18,18 @@ class MainHandler(tornado.web.RequestHandler):
         self.render("template.html")
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
+
     def __init__(self,application, request, **kwargs):
         tornado.websocket.WebSocketHandler.__init__(self, application, request, **kwargs)
         self.writetobrowser = False
+        self.buttonClickMessage = ""
 
     def write_data(self):
         while self.writetobrowser:
             # Exercise for you overwrite the following with your own values
             # make the time be based off the users time
             #12:09PM on Sep 25, 2016
-            datatosend = { 'number' : str(random.randrange(10,30)), 'date' : time.strftime("%I:%M on %b %d, %Y"), 'newvariable' : 'I have changed what the new variable says' }
+            datatosend = { 'number' : str(random.randrange(10,30)), 'date' : time.strftime("%I:%M on %b %d, %Y"), 'newvariable' : 'I have changed what the new variable says', 'buttonClick' : self.buttonClickMessage }
             self.write_message(datatosend)
             time.sleep(SLEEP_TIME)
 
@@ -42,8 +44,14 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         return True
 
     def on_message(self, message): 
-        print('message: ')
-        self.write_message(u"Received message from browser: " + message)
+        if message == "Button":
+            print('Button Clicked!')
+            self.buttonClickMessage = "The button was clicked"
+            time.sleep(2)
+            self.buttonClickMessage = ""
+        else: 
+            print('Message from user: ' + message)
+            #self.write_message(u"Received message from browser: " + message)
 
     def on_close(self):
         self.writetobrowser = False
